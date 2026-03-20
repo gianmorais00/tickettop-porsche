@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>TicketTop × Porsche Cup Brasil — Smart Race</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=DM+Sans:wght@300;400;500;600&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --pink:#FC2481;
+  --orange:#FE7B2B;
+  --grad:linear-gradient(135deg,#FC2481,#FE7B2B);
+  --grad-h:linear-gradient(135deg,#ff3a93,#ff8f3a);
+  --ink:#0A0A0A;
+  --white:#FFFFFF;
+  --muted:rgba(255,255,255,0.55);
+  --muted2:rgba(255,255,255,0.72);
+  --card-bg:rgba(255,255,255,0.06);
+  --card-border:rgba(255,255,255,0.1);
+  --radius:12px;
+  --r-sm:8px;
+}
+html{scroll-behavior:smooth}
+body{background:#0A0A0A;color:#fff;font-family:'DM Sans',Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ── SCROLLBAR ────────────────────────── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:#0A0A0A}
+::-webkit-scrollbar-thumb{background:var(--grad)}
+
+/* ── NAV ─────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  height:64px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.5rem;
+  background:rgba(10,10,10,0);
+  backdrop-filter:blur(0px);
+  border-bottom:1px solid transparent;
+  transition:all .4s ease;
+}
+nav.scrolled{
+  background:rgba(10,10,10,.94);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.nav-logo img{height:32px;width:auto;display:block}
+.nav-tag{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:.72rem;font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;color:rgba(255,255,255,.4);
+}
+.nav-cta{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.5rem 1.4rem;background:var(--grad);
+  color:#fff;font-size:.78rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;text-decoration:none;border-radius:100px;
+  transition:transform .2s,opacity .2s;
+}
+.nav-cta:hover{opacity:.88;transform:scale(1.03)}
+
+/* ── GRAD BAR ─────────────────────────── */
+.grad-bar{height:3px;background:var(--grad);width:100%}
+
+/* ── SECTIONS ─────────────────────────── */
+section{position:relative;overflow:hidden}
+.inner{max-width:1120px;margin:0 auto;padding:120px 2.5rem;position:relative;z-index:1}
+.inner-sm{max-width:1120px;margin:0 auto;padding:80px 2.5rem;position:relative;z-index:1}
+
+/* ── EYEBROW / LABEL ──────────────────── */
+.eyebrow{
+  display:inline-block;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:.68rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;
+  color:var(--pink);margin-bottom:.9rem;
+}
+.eyebrow-light{color:rgba(255,255,255,.5)}
+
+/* ── HEADINGS ─────────────────────────── */
+.h1{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;
+  font-size:clamp(3.5rem,9vw,8rem);line-height:.95;letter-spacing:-.01em;
+  text-transform:uppercase;color:#fff;
+}
+.h2{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:clamp(2.2rem,5vw,4rem);line-height:1;letter-spacing:-.01em;
+  text-transform:uppercase;color:#fff;margin-bottom:1rem;
+}
+.h2-grad{
+  background:var(--grad);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;
+}
+.h3{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:1.3rem;letter-spacing:.01em;text-transform:uppercase;
+  color:#fff;margin-bottom:.5rem;
+}
+.lead{font-size:1.05rem;color:var(--muted2);line-height:1.7;max-width:620px;margin-bottom:1.5rem}
+
+/* ── BUTTONS ──────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:1rem 2.4rem;background:var(--grad);color:#fff;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:1rem;letter-spacing:.12em;text-transform:uppercase;
+  text-decoration:none;border-radius:100px;
+  transition:transform .25s,box-shadow .25s,opacity .25s;
+  box-shadow:0 8px 40px rgba(252,36,129,.35);
+}
+.btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 50px rgba(252,36,129,.5);opacity:.95}
+.btn-ghost{
+  background:transparent;border:1.5px solid rgba(255,255,255,.25);
+  color:#fff;box-shadow:none;
+}
+.btn-ghost:hover{border-color:rgba(255,255,255,.6);box-shadow:none}
+
+/* ══ HERO ═══════════════════════════════ */
+#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 85% 50%, rgba(252,36,129,.08) 0%, transparent 70%),
+             radial-gradient(ellipse 50% 40% at 15% 80%, rgba(254,123,43,.04) 0%, transparent 60%);
+}
+.hero-banner{
+  position:absolute;inset:0;z-index:0;
+  pointer-events:none;
+}
+.hero-banner picture{display:block;width:100%;height:100%}
+.hero-banner img{
+  width:100%;height:100%;object-fit:cover;
+  opacity:0;filter:blur(16px);
+  transform:scale(1.08);
+  animation:heroImgReveal 2.2s .1s cubic-bezier(.22,1,.36,1) forwards;
+}
+@keyframes heroImgReveal{
+  to{opacity:.7;filter:blur(0px);transform:scale(1.05)}
+}
+@keyframes heroZoomSlow{
+  0%{transform:scale(1.05)}100%{transform:scale(1.15)}
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                   linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+}
+.hero-ticker{
+  position:absolute;bottom:0;left:0;right:0;height:44px;
+  background:var(--grad);display:flex;align-items:center;
+  overflow:hidden;z-index:2;
+}
+.ticker-track{
+  display:flex;gap:0;white-space:nowrap;
+  animation:ticker 22s linear infinite;
+}
+.ticker-item{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:#fff;
+  padding:0 2.5rem;border-right:1px solid rgba(255,255,255,.25);
+}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.hero-content{position:relative;z-index:1;padding:0 2.5rem;max-width:1120px;margin:0 auto;width:100%;padding-top:80px;padding-bottom:70px}
+.hero-kicker{
+  display:flex;align-items:center;gap:.75rem;margin-bottom:2rem;
+  opacity:0;animation:fadeUp .8s .2s forwards;
+}
+.hero-kicker-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--grad);box-shadow:0 0 10px rgba(252,36,129,.6);
+}
+.hero-kicker-txt{
+  font-family:'Barlow Condensed',sans-serif;font-size:.78rem;
+  font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--muted2);
+}
+.hero-h1-wrap{overflow:hidden;margin-bottom:.3rem}
+.hero-h1-line{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;
+  font-size:clamp(4rem,11vw,10rem);line-height:.92;letter-spacing:-.015em;
+  text-transform:uppercase;color:#fff;
+  opacity:0;animation:slideUp .9s forwards;
+}
+.hero-h1-line:nth-child(1){animation-delay:.35s}
+.hero-h1-line:nth-child(2){animation-delay:.45s;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.35)}
+.hero-h1-line:nth-child(3){animation-delay:.55s;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.hero-logo{
+  margin-bottom:2.5rem;
+  opacity:0;animation:fadeIn .8s .65s forwards;
+}
+.hero-logo img{height:48px;width:auto}
+.hero-sub{
+  max-width:520px;font-size:1.05rem;color:var(--muted2);line-height:1.7;
+  margin-bottom:2.5rem;
+  opacity:0;animation:fadeUp .8s .75s forwards;
+}
+.hero-actions{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  opacity:0;animation:fadeUp .8s .9s forwards;
+}
+.hero-stats{
+  display:flex;gap:3rem;margin-top:4rem;
+  opacity:0;animation:fadeUp .8s 1.05s forwards;
+  border-top:1px solid rgba(255,255,255,.08);padding-top:2rem;
+}
+.hs-item{}
+.hs-val{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:2.2rem;line-height:1;color:#fff;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hs-lbl{font-size:.78rem;color:var(--muted);letter-spacing:.05em;margin-top:.2rem}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);filter:blur(8px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(60px) scale(.96);filter:blur(10px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes fadeIn{from{opacity:0;filter:blur(6px)}to{opacity:1;filter:blur(0)}}
+
+/* ══ SECTION: PROBLEMA ══════════════════ */
+#problema{background:#0A0A0A}
+.prob-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;margin-top:3rem;border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);overflow:hidden}
+.prob-item{
+  padding:2rem 1.8rem;background:rgba(255,255,255,.025);
+  border-right:1px solid rgba(255,255,255,.06);
+  transition:background .3s,transform .3s;
+}
+.prob-item:last-child{border-right:none}
+.prob-item:hover{background:rgba(252,36,129,.06);transform:scale(1.03)}
+.prob-num{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;
+  font-size:3.5rem;line-height:1;color:transparent;
+  -webkit-text-stroke:1px rgba(252,36,129,.3);margin-bottom:1rem;
+}
+.prob-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;text-transform:uppercase;color:#fff;margin-bottom:.5rem;letter-spacing:.03em}
+.prob-desc{font-size:.88rem;color:var(--muted);line-height:1.65}
+
+/* ══ SECTION: SOLUCAO ═══════════════════ */
+#solucao{background:linear-gradient(160deg,#0f0f0f 0%,#1a0510 40%,#0f0a00 100%)}
+.sol-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3rem}
+.sol-card{
+  padding:2rem;border-radius:var(--radius);
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .3s,background .3s,box-shadow .4s;
+}
+.sol-card:hover{transform:translateY(-6px) scale(1.02);border-color:rgba(252,36,129,.4);background:rgba(252,36,129,.06);box-shadow:0 12px 36px rgba(252,36,129,.14)}
+.sol-icon{
+  width:44px;height:44px;border-radius:var(--r-sm);
+  background:var(--grad);display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;margin-bottom:1.2rem;
+}
+.sol-number{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:.75rem;
+  letter-spacing:.2em;color:var(--pink);text-transform:uppercase;margin-bottom:.4rem;
+}
+.sol-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.15rem;text-transform:uppercase;color:#fff;margin-bottom:.55rem;letter-spacing:.02em}
+.sol-desc{font-size:.88rem;color:var(--muted);line-height:1.65}
+.sol-highlight{
+  grid-column:1/-1;padding:2.5rem;
+  background:var(--grad);border-radius:var(--radius);
+  text-align:center;
+}
+.sol-highlight p{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-style:italic;font-size:1.6rem;text-transform:uppercase;letter-spacing:.04em}
+
+/* ══ SECTION: SMART RACE ════════════════ */
+#smartrace{background:#000;padding:0}
+.sr-hero{
+  background:linear-gradient(135deg,#FC2481 0%,#FE7B2B 100%);
+  padding:100px 2.5rem;position:relative;overflow:hidden;
+}
+.sr-hero-bg{
+  position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M0 50 L50 0 L100 50 L50 100Z' fill='rgba(255,255,255,.04)'/%3E%3C/svg%3E") 0 0/200px 200px;
+}
+.sr-hero-inner{max-width:1120px;margin:0 auto;position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.sr-logo-wrap img{height:44px;width:auto;opacity:.95}
+.sr-badge{
+  display:inline-block;background:rgba(255,255,255,.2);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.3);border-radius:100px;
+  padding:.4rem 1.2rem;font-family:'Barlow Condensed',sans-serif;
+  font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;margin-bottom:1rem;
+}
+.sr-price{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;
+  font-size:clamp(2.5rem,5vw,4rem);color:#fff;line-height:1;margin:1rem 0;
+}
+.sr-price-lbl{font-size:.85rem;color:rgba(255,255,255,.7);margin-bottom:1.5rem}
+.sr-modules{display:grid;grid-template-columns:1fr;gap:1rem}
+.sr-mod{
+  background:rgba(255,255,255,.15);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.2);border-radius:var(--r-sm);
+  padding:1.2rem 1.5rem;display:flex;align-items:flex-start;gap:1rem;
+  transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .3s;
+}
+.sr-mod:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.sr-mod-num{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.6rem;
+  color:rgba(255,255,255,.35);line-height:1;flex-shrink:0;min-width:32px;
+}
+.sr-mod-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;color:#fff;margin-bottom:.25rem;letter-spacing:.03em}
+.sr-mod-desc{font-size:.82rem;color:rgba(255,255,255,.7);line-height:1.55}
+
+/* ══ FACE ID ════════════════════════════ */
+#faceid{background:#0A0A0A}
+.fid-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem;position:relative}
+.fid-steps::before{
+  content:'';position:absolute;top:32px;left:12%;right:12%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(252,36,129,.4),rgba(254,123,43,.4),transparent);
+}
+.fid-step{text-align:center;position:relative;transition:transform .4s cubic-bezier(.22,1,.36,1)}
+.fid-step:hover{transform:translateY(-4px)}
+.fid-step-num{
+  width:64px;height:64px;border-radius:50%;margin:0 auto 1.2rem;
+  background:var(--grad);display:flex;align-items:center;justify-content:center;
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.6rem;color:#fff;
+  box-shadow:0 8px 30px rgba(252,36,129,.35);
+  position:relative;z-index:1;transition:transform .3s;
+}
+.fid-step:hover .fid-step-num{transform:scale(1.12)}
+.fid-step-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;color:#fff;margin-bottom:.4rem;letter-spacing:.03em}
+.fid-step-desc{font-size:.83rem;color:var(--muted);line-height:1.6}
+.fid-guarantee{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  margin-top:3rem;border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);overflow:hidden;
+}
+.fid-g{
+  padding:1.8rem;background:rgba(255,255,255,.025);text-align:center;
+  transition:background .3s;
+}
+.fid-g:hover{background:rgba(252,36,129,.07)}
+.fid-g-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:2rem;color:var(--pink);margin-bottom:.4rem}
+.fid-g-lbl{font-size:.83rem;color:var(--muted);line-height:1.5}
+
+/* ══ APP ════════════════════════════════ */
+#app{background:linear-gradient(160deg,#0a0a0a 0%,#100a1a 100%)}
+.app-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.app-card{
+  padding:2rem 1.8rem;border-radius:var(--radius);
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  transition:transform .3s,border-color .3s;
+}
+.app-card:hover{transform:translateY(-6px) scale(1.03);border-color:rgba(252,36,129,.35);box-shadow:0 16px 40px rgba(252,36,129,.18)}
+.app-card-icon{
+  font-size:2rem;margin-bottom:1rem;
+  width:56px;height:56px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--grad);
+  transition:transform .3s ease,box-shadow .3s ease;
+  flex-shrink:0;
+}
+.app-card:hover .app-card-icon{transform:scale(1.18) rotate(-3deg);box-shadow:0 8px 24px rgba(252,36,129,.35)}
+.app-card-icon svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.app-card-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;text-transform:uppercase;color:#fff;margin-bottom:.6rem;letter-spacing:.03em}
+.app-card-desc{font-size:.85rem;color:var(--muted);line-height:1.65}
+
+/* ══ FLUXO ══════════════════════════════ */
+#fluxo{background:#000}
+.fluxo-table{width:100%;border-collapse:collapse;margin-top:2.5rem;border-radius:var(--radius);overflow:hidden}
+.fluxo-table thead tr{background:var(--grad)}
+.fluxo-table thead th{padding:1rem 1.4rem;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.15em;text-transform:uppercase;text-align:left;color:#fff}
+.fluxo-table tbody tr{border-bottom:1px solid rgba(255,255,255,.05);transition:background .25s}
+.fluxo-table tbody tr:hover{background:rgba(255,255,255,.03)}
+.fluxo-table tbody td{padding:1.2rem 1.4rem;font-size:.88rem;vertical-align:top}
+.fluxo-table tbody td:first-child{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;color:#fff;letter-spacing:.04em}
+.fluxo-table tbody td:nth-child(2){color:var(--muted2)}
+.fluxo-table tbody td:last-child{color:var(--muted);font-size:.82rem}
+.fluxo-tag{
+  display:inline-block;padding:.2rem .7rem;border-radius:100px;
+  font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  background:rgba(252,36,129,.15);color:var(--pink);margin-top:.4rem;
+}
+
+/* ══ INVESTIMENTO ═══════════════════════ */
+#investimento{background:linear-gradient(160deg,#0a0a0a,#0f0510)}
+.inv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.inv-card{
+  border-radius:var(--radius);overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  transition:transform .3s,border-color .3s;
+}
+.inv-card:hover{transform:translateY(-7px) scale(1.02);border-color:rgba(252,36,129,.4);box-shadow:0 14px 40px rgba(252,36,129,.15)}
+.inv-card-head{padding:2rem 2rem 1.5rem;background:var(--grad)}
+.inv-card-head-dark{padding:2rem 2rem 1.5rem;background:rgba(255,255,255,.05)}
+.inv-card-lbl{font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-bottom:.4rem}
+.inv-card-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:2.5rem;color:#fff;line-height:1}
+.inv-card-desc{font-size:.82rem;color:rgba(255,255,255,.7);margin-top:.4rem}
+.inv-card-body{padding:1.5rem 2rem;background:rgba(255,255,255,.03)}
+.inv-card-body ul{list-style:none}
+.inv-card-body li{padding:.5rem 0;font-size:.85rem;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:flex-start;gap:.6rem}
+.inv-card-body li:last-child{border-bottom:none}
+.inv-card-body li::before{content:"→";color:var(--pink);flex-shrink:0;font-size:.85rem}
+.inv-total{
+  margin-top:2rem;padding:2.5rem;border-radius:var(--radius);
+  background:var(--grad);text-align:center;
+}
+.inv-total-lbl{font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:.8rem}
+.inv-total-val{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:clamp(2.5rem,6vw,5rem);color:#fff;line-height:1}
+.inv-total-sub{font-size:.9rem;color:rgba(255,255,255,.65);margin-top:.8rem}
+
+/* ══ PLANOS ═════════════════════════════ */
+#planos{background:#000}
+.planos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.plano{
+  border-radius:var(--radius);overflow:hidden;
+  border:1px solid rgba(255,255,255,.07);
+  background:rgba(255,255,255,.03);
+  transition:transform .3s,border-color .3s;
+  position:relative;
+}
+.plano:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 12px 36px rgba(18,32,43,.18)}
+.plano.featured{border-color:rgba(252,36,129,.5);background:rgba(252,36,129,.05)}
+.plano.featured::before{
+  content:"RECOMENDADO";position:absolute;top:0;right:0;
+  background:var(--grad);padding:.3rem .9rem;
+  font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#fff;
+  border-radius:0 var(--radius) 0 var(--r-sm);
+}
+.plano-head{padding:2rem 2rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.plano-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1.1rem;text-transform:uppercase;color:#fff;letter-spacing:.05em;margin-bottom:.3rem}
+.plano.featured .plano-name{color:var(--pink)}
+.plano-price{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:2.2rem;color:#fff;line-height:1;margin-bottom:.2rem}
+.plano-period{font-size:.78rem;color:var(--muted)}
+.plano-body{padding:1.5rem 2rem}
+.plano-body ul{list-style:none}
+.plano-body li{padding:.5rem 0;font-size:.85rem;color:var(--muted2);border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:flex-start;gap:.6rem}
+.plano-body li:last-child{border-bottom:none}
+.plano-body li::before{content:"↗";color:var(--orange);flex-shrink:0}
+
+/* ══ CRONOGRAMA ═════════════════════════ */
+#cronograma{background:linear-gradient(160deg,#0a0a0a,#0a0a10)}
+.crono-steps{display:flex;gap:0;margin-top:3rem;position:relative}
+.crono-steps::before{
+  content:'';position:absolute;top:28px;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--pink),var(--orange));
+}
+.crono-step{flex:1;position:relative;padding-top:70px;padding-right:1.5rem}
+.crono-dot{
+  position:absolute;top:16px;left:0;
+  width:24px;height:24px;border-radius:50%;
+  background:var(--grad);
+  box-shadow:0 0 12px rgba(252,36,129,.5);
+  z-index:1;
+}
+.crono-marker{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.72rem;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--pink);margin-bottom:.5rem;
+}
+.crono-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:1rem;text-transform:uppercase;color:#fff;margin-bottom:.5rem;letter-spacing:.03em}
+.crono-items{list-style:none}
+.crono-items li{font-size:.8rem;color:var(--muted);padding:.2rem 0;display:flex;align-items:flex-start;gap:.4rem}
+.crono-items li::before{content:"·";color:var(--orange);flex-shrink:0}
+
+/* ══ CTA ════════════════════════════════ */
+#cta{background:#000;position:relative;overflow:hidden}
+.cta-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%, rgba(252,36,129,.12) 0%, transparent 70%);
+}
+.cta-inner{
+  text-align:center;max-width:800px;margin:0 auto;padding:120px 2.5rem;
+  position:relative;z-index:1;
+}
+.cta-logo{margin-bottom:2.5rem}
+.cta-logo img{height:48px;width:auto;opacity:.9}
+.cta-h1{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;
+  font-size:clamp(2.5rem,7vw,6rem);text-transform:uppercase;color:#fff;
+  line-height:.95;margin-bottom:1.5rem;
+}
+.cta-sub{font-size:1rem;color:var(--muted);margin-bottom:3rem;max-width:500px;margin-left:auto;margin-right:auto}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
+.cta-contact{font-size:.83rem;color:var(--muted);display:flex;gap:2rem;justify-content:center;flex-wrap:wrap}
+.cta-contact a{color:var(--muted);text-decoration:none;transition:color .2s}
+.cta-contact a:hover{color:var(--pink)}
+
+/* ══ FOOTER ═════════════════════════════ */
+footer{background:#0A0A0A;border-top:1px solid rgba(255,255,255,.05);padding:2rem 2.5rem;display:flex;align-items:center;justify-content:space-between}
+footer img{height:28px;width:auto;opacity:.5}
+.footer-copy{font-size:.75rem;color:rgba(255,255,255,.25);text-align:right}
+
+/* ══ ANIMATIONS ═════════════════════════ */
+.reveal{opacity:0;transform:translateY(28px) scale(.97);filter:blur(6px);transition:opacity .75s ease,transform .75s ease,filter .75s ease}
+.reveal.up{opacity:1;transform:translateY(0) scale(1);filter:blur(0px)}
+.reveal-scale{opacity:0;transform:scale(.90);filter:blur(6px);transition:opacity .85s ease,transform .85s ease,filter .85s ease}
+.reveal-scale.up{opacity:1;transform:scale(1);filter:blur(0px)}
+.delay-1{transition-delay:.1s}
+.delay-2{transition-delay:.2s}
+.delay-3{transition-delay:.3s}
+.delay-4{transition-delay:.4s}
+.delay-5{transition-delay:.5s}
+.delay-6{transition-delay:.6s}
+
+/* ══ MOBILE BOTTOM NAV ═══════════════════ */
+.mob-nav{
+  display:none;
+  position:fixed;top:auto;bottom:0;left:0;right:0;z-index:9999;
+  height:68px;
+  background:rgba(10,10,10,.97);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:0 .5rem;
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+.mob-nav-inner{
+  display:flex;align-items:stretch;height:100%;
+  width:100%;
+  justify-content:space-around;
+  padding:0 4px;
+}
+.mob-nav-btn{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:4px;text-decoration:none;
+  color:rgba(255,255,255,.45);
+  font-size:.55rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  font-family:'Barlow Condensed',sans-serif;
+  transition:color .2s;
+  -webkit-tap-highlight-color:transparent;
+  border-radius:10px;
+  padding:8px 6px 6px;
+  min-width:0;
+}
+.mob-nav-btn svg{
+  width:22px;height:22px;flex-shrink:0;
+  transition:transform .2s;
+}
+.mob-nav-btn:active svg{transform:scale(.85)}
+.mob-nav-btn.active{color:var(--pink)}
+.mob-nav-btn.active svg{stroke:var(--pink)}
+.mob-nav-cta{
+  background:var(--grad);border-radius:12px;
+  margin:10px 4px;padding:0 4px;
+  color:#fff !important;
+}
+.mob-nav-cta svg{stroke:#fff !important}
+.mob-nav-cta span{color:#fff}
+
+/* ══ MARCA CARDS (light) ────────────────── */
+.marca-card{
+  background:#fff;border-radius:var(--radius);padding:2rem 1.8rem;
+  border:1px solid rgba(18,32,43,.07);box-shadow:var(--shadow-card);
+  transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .3s;position:relative;overflow:hidden;
+}
+.marca-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad)}
+.marca-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 12px 36px rgba(18,32,43,.13)}
+.marca-icon{
+  width:52px;height:52px;border-radius:14px;background:var(--grad);
+  display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.marca-card:hover .marca-icon{transform:scale(1.18) rotate(-3deg);box-shadow:0 8px 24px rgba(252,36,129,.32)}
+.marca-icon svg{width:26px;height:26px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ══ RACING TRACK TIMELINE ──────────────── */
+.track-wrap{margin-top:2.5rem;position:relative}
+.track-svg{width:100%;height:auto;display:block;margin-bottom:.5rem}
+
+/* Car animation along path */
+@keyframes carDrive{
+  0%{opacity:0}
+  5%{opacity:1}
+  /* top-left start */
+  10%{transform:translate(0,0) rotate(0deg)}
+  /* move right along top */
+  40%{transform:translate(580px,0) rotate(0deg)}
+  /* right curve */
+  55%{transform:translate(838px,44px) rotate(90deg)}
+  /* move left along bottom */
+  85%{transform:translate(0px,88px) rotate(180deg)}
+  /* left curve back */
+  99%{transform:translate(-44px,44px) rotate(270deg);opacity:1}
+  100%{opacity:0}
+}
+
+/* Track line draw animation */
+#race-line{
+  animation:drawTrack 2.2s ease-in-out forwards;
+  animation-play-state:paused;
+}
+@keyframes drawTrack{
+  to{stroke-dashoffset:0}
+}
+.track-wrap.track-active #race-line{animation-play-state:running}
+.track-wrap.track-active .track-checkpoint{animation:dotAppear .4s ease forwards}
+.track-wrap.track-active .track-checkpoint-inner{animation:dotAppear .4s ease forwards}
+.track-checkpoint{transition:opacity .3s}
+.track-checkpoint:nth-child(1){animation-delay:.5s}
+.track-checkpoint:nth-child(2){animation-delay:1s}
+.track-checkpoint-inner:nth-child(1){animation-delay:.5s}
+.track-checkpoint-inner:nth-child(2){animation-delay:1s}
+
+@keyframes dotAppear{from{opacity:0;r:0}to{opacity:1}}
+
+/* Car */
+#race-car{animation-play-state:paused}
+.track-wrap.track-active #race-car{
+  animation:carDrive 2.2s ease-in-out forwards;
+  animation-play-state:running;
+}
+
+/* Step labels */
+.track-labels{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  margin-top:.75rem;
+  border-top:2px solid rgba(255,255,255,.07);
+  padding-top:1.2rem;
+}
+.track-label{
+  padding:0 1rem 0 .5rem;
+  opacity:.45;transform:translateY(8px);
+  transition:opacity .4s,transform .4s;
+  cursor:pointer;
+}
+.track-label.active,.track-wrap.track-active .track-label{
+  opacity:1;transform:translateY(0);
+}
+.track-label:nth-child(1){transition-delay:0.4s}
+.track-label:nth-child(2){transition-delay:0.9s}
+.track-label:nth-child(3){transition-delay:1.3s}
+.track-label:nth-child(4){transition-delay:1.8s}
+
+.tl-connector{
+  width:2px;height:20px;background:var(--grad);margin-bottom:.6rem;
+  opacity:.5;
+}
+.tl-badge{
+  display:inline-block;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.68rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--pink);margin-bottom:.4rem;
+}
+.tl-badge-final{
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.tl-title{
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.95rem;
+  text-transform:uppercase;color:#fff;margin-bottom:.5rem;letter-spacing:.03em;
+}
+.tl-items{list-style:none}
+.tl-items li{font-size:.78rem;color:var(--muted);padding:.15rem 0;display:flex;align-items:flex-start;gap:.3rem}
+.tl-items li::before{content:"›";color:var(--orange);flex-shrink:0}
+
+@media(max-width:640px){
+  .track-labels{grid-template-columns:repeat(2,1fr);gap:1rem}
+  .track-svg{max-height:120px}
+}
+
+/* ══ RESPONSIVE UPDATES ──────────────────── */
+@media(max-width:900px){
+  .sr-hero-inner,.sol-grid,.inv-grid,.planos-grid,.app-grid,.fid-guarantee{grid-template-columns:1fr}
+  .fid-steps{grid-template-columns:repeat(2,1fr)}
+  .fid-steps::before{display:none}
+  .crono-steps{flex-direction:column;gap:2rem}
+  .crono-steps::before{display:none}
+  .crono-dot{top:0;left:50%;transform:translateX(-50%)}
+  .crono-step{padding-top:50px;text-align:center;padding-right:0}
+  .hero-stats{gap:1.5rem;flex-wrap:wrap}
+  .fluxo-table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .fluxo-table{min-width:640px}
+}
+
+@media(max-width:640px){
+  /* body padding for bottom nav */
+  body{padding-bottom:calc(68px + env(safe-area-inset-bottom,0px))}
+
+  /* hide desktop top nav on mobile only — bottom nav takes over */
+  nav#nav{display:none !important}
+
+  /* show mobile bottom nav */
+  .mob-nav{
+    display:flex !important;
+    position:fixed !important;
+    bottom:0 !important;
+    top:auto !important;
+    left:0 !important;
+    right:0 !important;
+    z-index:9999 !important;
+    width:100% !important;
+  }
+
+  /* section padding */
+  .inner{padding:80px 1.25rem}
+  .inner-sm{padding:60px 1.25rem}
+
+  /* hero */
+  #hero{min-height:100svh;align-items:flex-end}
+  .hero-banner img{object-position:center top;opacity:.5}
+  .hero-banner::after{
+    background:linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.15) 35%, rgba(0,0,0,.15) 55%, rgba(0,0,0,.7) 85%);
+  }
+  .hero-content{padding:0 1.25rem;padding-top:100px;padding-bottom:70px}
+  .hero-h1-line{font-size:clamp(3rem,18vw,6rem)}
+  .cover-sec{padding-top:50px}
+  .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.5rem}
+  .hs-val{font-size:1.8rem}
+  .hero-kicker{margin-bottom:1.2rem}
+  .hero-sub{font-size:.92rem}
+  .hero-actions{flex-direction:column;gap:.75rem}
+  .hero-actions .btn{text-align:center;justify-content:center;width:100%}
+
+  /* h2 sizing */
+  .h2{font-size:clamp(1.8rem,8vw,3rem)}
+
+  /* grids */
+  .grid-3,.chips-grid,.stats-grid,.tiers-grid,.prob-grid{grid-template-columns:1fr}
+
+  /* sr-hero split */
+  .sr-hero{padding:60px 1.25rem}
+  .sr-hero-inner{grid-template-columns:1fr;gap:2.5rem}
+
+  /* fid steps to 1 col on very small */
+  .fid-steps{grid-template-columns:1fr}
+
+  /* fluxo table horizontal scroll */
+  .fluxo-table-wrap{border-radius:var(--radius);overflow:hidden}
+
+  /* crono */
+  .crono-step{padding-left:1.5rem}
+
+  /* footer */
+  footer{padding:2rem 1.25rem;text-align:left}
+
+  /* sol highlight */
+  .sol-highlight p{font-size:1.1rem}
+
+  /* planos */
+  .plano.featured::before{font-size:.58rem;padding:.25rem .6rem}
+
+  /* marca section card padding */
+  .card{padding:1.5rem}
+
+  /* hero ticker font */
+  .ticker-item{font-size:.68rem;padding:0 1.2rem}
+}
+
+/* ── HERO BANNER OVERLAY ─────────────── */
+.hero-banner::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg, rgba(0,0,0,.65) 0%, rgba(0,0,0,.3) 45%, transparent 70%);
+}
+
+/* ── CURSOR GLOW ─────────────────────── */
+.cursor-glow{
+  position:fixed;width:320px;height:320px;
+  border-radius:50%;pointer-events:none;z-index:9998;
+  background:radial-gradient(circle, rgba(252,36,129,.12) 0%, rgba(254,123,43,.06) 40%, transparent 70%);
+  transform:translate(-50%,-50%);
+  transition:opacity .3s;
+  opacity:0;
+  mix-blend-mode:screen;
+}
+.cursor-glow.active{opacity:1}
+@media(max-width:768px){.cursor-glow{display:none}}
+</style>
+</head>
+<body>
+
+<div class="grad-bar"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo"><img src="01. Logo - TicketTop - All White.png" alt="TicketTop"></div>
+  <div class="nav-tag">× Porsche Cup Brasil</div>
+  <a href="#cta" class="nav-cta">Falar com a equipe</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-banner">
+    <picture>
+      <source media="(max-width:768px)" srcset="asset-hero-banner-Mobile.webp" type="image/webp">
+      <source media="(min-width:769px)" srcset="asset-hero-banner-desktop.webp" type="image/webp">
+      <img src="asset-hero-banner-desktop.webp" alt="" loading="eager">
+    </picture>
+  </div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-kicker">
+      <div class="hero-kicker-dot"></div>
+      <span class="hero-kicker-txt">Proposta de Parceria Tecnológica</span>
+    </div>
+    <div>
+      <div class="hero-h1-wrap"><div class="hero-h1-line">SMART</div></div>
+      <div class="hero-h1-wrap"><div class="hero-h1-line">RACE</div></div>
+      <div class="hero-h1-wrap"><div class="hero-h1-line">2025</div></div>
+    </div>
+    <div class="hero-logo"><img src="01. Logo - TicketTop - Magenta.png" alt="TicketTop"></div>
+    <p class="hero-sub">A Porsche vence corridas com engenharia, dados e controle. Eventos premium exigem a mesma lógica. A TicketTop aplica essa precisão à bilheteria e aos acessos da Porsche Cup Brasil, transformando operação em vantagem competitiva.</p>
+    <div class="hero-actions">
+      <a href="#smartrace" class="btn">Ver a Proposta</a>
+      <a href="#cta" class="btn btn-ghost">Falar com a Equipe</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hs-item">
+        <div class="hs-val">&lt; 2s</div>
+        <div class="hs-lbl">Entrada por Face ID</div>
+      </div>
+      <div class="hs-item">
+        <div class="hs-val">45</div>
+        <div class="hs-lbl">Dias para MVP</div>
+      </div>
+      <div class="hs-item">
+        <div class="hs-val">100%</div>
+        <div class="hs-lbl">Taxa de conveniência para a Porsche Cup</div>
+      </div>
+      <div class="hs-item">
+        <div class="hs-val">5</div>
+        <div class="hs-lbl">Perfis de acesso por nível</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">Bilheteria Inteligente</span>
+      <span class="ticker-item">Face ID nas Catracas</span>
+      <span class="ticker-item">App Oficial Porsche Cup</span>
+      <span class="ticker-item">Dashboard em Tempo Real</span>
+      <span class="ticker-item">Split Automático</span>
+      <span class="ticker-item">Zero Fraude</span>
+      <span class="ticker-item">Segurança · Tecnologia · Performance</span>
+      <span class="ticker-item">Bilheteria Inteligente</span>
+      <span class="ticker-item">Face ID nas Catracas</span>
+      <span class="ticker-item">App Oficial Porsche Cup</span>
+      <span class="ticker-item">Dashboard em Tempo Real</span>
+      <span class="ticker-item">Split Automático</span>
+      <span class="ticker-item">Zero Fraude</span>
+      <span class="ticker-item">Segurança · Tecnologia · Performance</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMA -->
+<section id="problema">
+  <div class="inner">
+    <div class="reveal"><span class="eyebrow">O problema operacional invisível</span></div>
+    <div class="reveal delay-1"><h2 class="h2">Em eventos premium,<br><span class="h2-grad">os maiores riscos são silenciosos.</span></h2></div>
+    <p class="lead reveal delay-2">Tudo isso acontece antes da largada. A pergunta não é se isso acontece. É se isso precisa continuar acontecendo.</p>
+    <div class="prob-grid">
+      <div class="prob-item reveal delay-1">
+        <div class="prob-num">01</div>
+        <div class="prob-title">Ingressos compartilhados ou repassados</div>
+        <div class="prob-desc">Acesso vendido ou transferido fora dos canais oficiais. Quem realmente adquiriu o ingresso? Sem rastreabilidade, não há como saber.</div>
+      </div>
+      <div class="prob-item reveal delay-2">
+        <div class="prob-num">02</div>
+        <div class="prob-title">Falta de controle preciso por setor</div>
+        <div class="prob-desc">VIPs aguardando liberação. Pessoas acessando setores errados. Acesso a setores privados afeta faturamento, lotação e experiência premium.</div>
+      </div>
+      <div class="prob-item reveal delay-3">
+        <div class="prob-num">03</div>
+        <div class="prob-title">Decisões sem dados em tempo real</div>
+        <div class="prob-desc">Staff tentando organizar fluxos sem informação. O improviso cria erros em cascata — e a experiência para de ser premium.</div>
+      </div>
+      <div class="prob-item reveal delay-4">
+        <div class="prob-num">04</div>
+        <div class="prob-title">Experiência inconsistente para patrocinadores</div>
+        <div class="prob-desc">Setor premium mal controlado é setor premium sem valor. O ROI do patrocinador some quando a exclusividade não é real.</div>
+      </div>
+      <div class="prob-item reveal delay-5">
+        <div class="prob-num">05</div>
+        <div class="prob-title">Sem aprendizado para a próxima etapa</div>
+        <div class="prob-desc">Sem registro confiável, cada etapa começa do zero. Nenhuma inteligência acumulada. A operação não evolui.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUCAO -->
+<section id="solucao">
+  <div class="inner">
+    <div class="reveal"><span class="eyebrow">A mudança de abordagem</span></div>
+    <div class="reveal delay-1"><h2 class="h2">A TicketTop não entra para<br><span class="h2-grad">"operar ingressos".</span></h2></div>
+    <p class="lead reveal delay-2">Ela entra para assumir o controle da experiência. A operação deixa de reagir. Passa a comandar.</p>
+    <div class="sol-grid">
+      <div class="sol-card reveal delay-1">
+        <div class="sol-number">01</div>
+        <div class="sol-title">Bilheteria própria da Porsche Cup</div>
+        <div class="sol-desc">Canal oficial de vendas — identidade visual do campeonato, sem plataformas genéricas.</div>
+      </div>
+      <div class="sol-card reveal delay-2">
+        <div class="sol-number">02</div>
+        <div class="sol-title">Ingressos vinculados ao Face ID</div>
+        <div class="sol-desc">O ingresso é a pessoa. Intransferível, irrepetível, auditável.</div>
+      </div>
+      <div class="sol-card reveal delay-3">
+        <div class="sol-number">03</div>
+        <div class="sol-title">Catracas com reconhecimento facial</div>
+        <div class="sol-desc">Acesso automático em menos de 2 segundos — sem papel, sem QR Code, sem fila.</div>
+      </div>
+      <div class="sol-card reveal delay-4">
+        <div class="sol-number">04</div>
+        <div class="sol-title">Controle total de setores e circulação</div>
+        <div class="sol-desc">Cada setor com o nível de acesso correto. Staff com informação. Zero improviso.</div>
+      </div>
+      <div class="sol-card reveal delay-5">
+        <div class="sol-number">05</div>
+        <div class="sol-title">Dados operacionais em tempo real</div>
+        <div class="sol-desc">Diretoria e gerência enxergam o evento enquanto ele acontece — e decidem com inteligência.</div>
+      </div>
+      <div class="sol-highlight reveal delay-6">
+        <p>Bilheteria e acesso deixam de ser bastidor.<br>Passam a reforçar o valor da marca Porsche Cup.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SMART RACE -->
+<section id="smartrace">
+  <div class="sr-hero">
+    <div class="sr-hero-bg"></div>
+    <div class="sr-hero-inner">
+      <div>
+        <div class="sr-logo-wrap reveal"><img src="01. Logo - TicketTop - All White.png" alt="TicketTop"></div>
+        <div class="sr-badge reveal delay-1">Infraestrutura Digital Completa</div>
+        <h2 style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-style:italic;font-size:clamp(2.5rem,5vw,4.5rem);text-transform:uppercase;color:#fff;line-height:.95;margin-bottom:.5rem" class="reveal delay-2">SMART RACE</h2>
+        <p class="sr-price reveal delay-3">R$ 700.000</p>
+        <p class="sr-price-lbl reveal delay-3">Implementação completa — App, Face ID, Painel e Site Oficial</p>
+        <p style="font-size:.88rem;color:rgba(255,255,255,.75);line-height:1.65;max-width:420px" class="reveal delay-4">Inclui implementação, treinamento da equipe e suporte de lançamento. Infraestrutura em nuvem até R$ 1.000/mês, cobrado no cartão Porsche Cup.</p>
+      </div>
+      <div class="sr-modules">
+        <div class="sr-mod reveal delay-1">
+          <div class="sr-mod-num">01</div>
+          <div>
+            <div class="sr-mod-title">Identidade Digital</div>
+            <div class="sr-mod-desc">Face ID integrado às catracas · Ingressos digitais com QR Code · Antifraude</div>
+          </div>
+        </div>
+        <div class="sr-mod reveal delay-2">
+          <div class="sr-mod-num">02</div>
+          <div>
+            <div class="sr-mod-title">Plataforma Central</div>
+            <div class="sr-mod-desc">App Oficial iOS e Android · Site com bilheteria integrada · Publicação Apple e Google</div>
+          </div>
+        </div>
+        <div class="sr-mod reveal delay-3">
+          <div class="sr-mod-num">03</div>
+          <div>
+            <div class="sr-mod-title">Painéis por Nível de Acesso</div>
+            <div class="sr-mod-desc">Diretoria · Gerência Operacional · Staff · Piloto / Entrant · Fã</div>
+          </div>
+        </div>
+        <div class="sr-mod reveal delay-4">
+          <div class="sr-mod-num">04</div>
+          <div>
+            <div class="sr-mod-title">Gestão Inteligente</div>
+            <div class="sr-mod-desc">Controle por setor: Arquibancada, Paddock, Hospitality, VIP · Painel em tempo real</div>
+          </div>
+        </div>
+        <div class="sr-mod reveal delay-5">
+          <div class="sr-mod-num">05</div>
+          <div>
+            <div class="sr-mod-title">Integração Total</div>
+            <div class="sr-mod-desc">Catracas + tablets + celulares + app sincronizados · Split automático de pagamento</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FACE ID -->
+<section id="faceid">
+  <div class="inner">
+    <div class="reveal"><span class="eyebrow">Ingresso com Face ID</span></div>
+    <div class="reveal delay-1"><h2 class="h2">A pessoa passa a ser <span class="h2-grad">o ingresso.</span></h2></div>
+    <div class="fid-steps">
+      <div class="fid-step reveal delay-1">
+        <div class="fid-step-num">1</div>
+        <div class="fid-step-title">Compra no site oficial</div>
+        <div class="fid-step-desc">Canal oficial do campeonato com identidade visual Porsche Cup.</div>
+      </div>
+      <div class="fid-step reveal delay-2">
+        <div class="fid-step-num">2</div>
+        <div class="fid-step-title">Cadastro facial único</div>
+        <div class="fid-step-desc">Biometria vinculada ao ingresso uma única vez. Dados armazenados com segurança pela TicketTop.</div>
+      </div>
+      <div class="fid-step reveal delay-3">
+        <div class="fid-step-num">3</div>
+        <div class="fid-step-title">Ingresso intransferível</div>
+        <div class="fid-step-desc">Zero compartilhamento. Zero fraude. Auditável em todos os setores.</div>
+      </div>
+      <div class="fid-step reveal delay-4">
+        <div class="fid-step-num">4</div>
+        <div class="fid-step-title">Entrada automática por Face ID</div>
+        <div class="fid-step-desc">Reconhecimento facial. Menos de 2 segundos. Fluxo contínuo. Segurança real.</div>
+      </div>
+    </div>
+    <div class="fid-guarantee">
+      <div class="fid-g reveal delay-1">
+        <div class="fid-g-val">Zero fraude</div>
+        <div class="fid-g-lbl">Ingresso intransferível vinculado à biometria. Por design.</div>
+      </div>
+      <div class="fid-g reveal delay-2">
+        <div class="fid-g-val">&lt; 2s</div>
+        <div class="fid-g-lbl">Entrada automática por reconhecimento facial. Fluxo contínuo.</div>
+      </div>
+      <div class="fid-g reveal delay-3">
+        <div class="fid-g-val">Controle total</div>
+        <div class="fid-g-lbl">Dados biométricos sob controle exclusivo da Porsche Cup. Sem compartilhamento automático.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APP -->
+<section id="app">
+  <div class="inner">
+    <div class="reveal"><span class="eyebrow">App Oficial Porsche Cup</span></div>
+    <div class="reveal delay-1"><h2 class="h2">Um app no nível das <span class="h2-grad">maiores ligas do mundo.</span></h2></div>
+    <div class="app-grid">
+      <div class="app-card reveal delay-1">
+        <div class="app-card-icon"><svg viewBox="0 0 24 24"><path d="M19 8H5l-3 5h20l-3-5z"/><path d="M5 13v3a1 1 0 001 1h1a2 2 0 004 0h2a2 2 0 004 0h1a1 1 0 001-1v-3"/><circle cx="7" cy="17" r="1"/><circle cx="17" cy="17" r="1"/><path d="M9 8V5l3-2 3 2v3"/></svg></div>
+        <div class="app-card-title">Resultados ao Vivo</div>
+        <div class="app-card-desc">Posições, gap, voltas e incidentes em tempo real. Push de Safety Car, Red Flag e pódio.</div>
+      </div>
+      <div class="app-card reveal delay-2">
+        <div class="app-card-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/></svg></div>
+        <div class="app-card-title">Perfis de Pilotos</div>
+        <div class="app-card-desc">Número, equipe, stats da temporada. Feed de notícias. Seguir e curtir.</div>
+      </div>
+      <div class="app-card reveal delay-3">
+        <div class="app-card-icon"><svg viewBox="0 0 24 24"><path d="M2 9a3 3 0 010-6h20a3 3 0 010 6v6a3 3 0 010 6H2a3 3 0 010-6V9z"/><path d="M9 3v18M15 3v18"/></svg></div>
+        <div class="app-card-title">Compra de Ingressos</div>
+        <div class="app-card-desc">Ingresso + Face ID em uma sessão. Mapa interativo do circuito. Pré-venda exclusiva para membros.</div>
+      </div>
+      <div class="app-card reveal delay-4">
+        <div class="app-card-icon"><svg viewBox="0 0 24 24"><rect x="18" y="3" width="4" height="18"/><rect x="10" y="8" width="4" height="13"/><rect x="2" y="13" width="4" height="8"/></svg></div>
+        <div class="app-card-title">Acompanhamento Esportivo</div>
+        <div class="app-card-desc">Championship Standings. Telemetria. Fastest Lap. Histórico de pit stops.</div>
+      </div>
+      <div class="app-card reveal delay-5">
+        <div class="app-card-icon"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/><path d="M19 3v18"/></svg></div>
+        <div class="app-card-title">Highlights e Replay</div>
+        <div class="app-card-desc">Replay por piloto ou setor do circuito. Conteúdo exclusivo dos bastidores.</div>
+      </div>
+      <div class="app-card reveal delay-6">
+        <div class="app-card-icon"><svg viewBox="0 0 24 24"><path d="M6 9H3V4h3M18 9h3V4h-3M7 4h10M12 15v4M8 20h8"/><path d="M7 4C7 4 5 15 12 15S17 4 17 4"/></svg></div>
+        <div class="app-card-title">Perfis das Equipes</div>
+        <div class="app-card-desc">Pilotos vinculados. Área de patrocinadores. Painel de conteúdo oficial do campeonato.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FLUXO -->
+<section id="fluxo">
+  <div class="inner">
+    <div class="reveal"><span class="eyebrow">Fluxo integrado</span></div>
+    <div class="reveal delay-1"><h2 class="h2">Cada perfil acessa <span class="h2-grad">exatamente o que precisa.</span></h2></div>
+    <p class="lead reveal delay-2">Controle por camada. A catraca é o ponto de convergência: app + biometria + dado operacional em um único gesto.</p>
+    <div class="reveal delay-2">
+    <div class="fluxo-table-wrap">
+    <table class="fluxo-table">
+      <thead>
+        <tr>
+          <th>Perfil</th>
+          <th>Funcionalidade</th>
+          <th>Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Diretoria Porsche Cup<div class="fluxo-tag">Executivo</div></td>
+          <td>Dashboard: receita por etapa, ocupação por setor, perfil de compra, comparativo entre etapas e relatório de patrocinadores</td>
+          <td>Inteligência de negócio para escalar o campeonato e apresentar ROI a patrocinadores</td>
+        </tr>
+        <tr>
+          <td>Gerência Operação<div class="fluxo-tag">Campo</div></td>
+          <td>Painel tático: fluxo nas catracas em tempo real, alertas de acesso indevido, taxa de ocupação por setor</td>
+          <td>Decisão em campo — resposta em menos de 30 segundos</td>
+        </tr>
+        <tr>
+          <td>Staff<div class="fluxo-tag">Mobile</div></td>
+          <td>App operacional: validação manual de acesso, consulta por Face ID, comunicação de ocorrências por setor</td>
+          <td>Operação com informação — sem improviso, sem fila</td>
+        </tr>
+        <tr>
+          <td>Piloto / Entrant<div class="fluxo-tag">Esportivo</div></td>
+          <td>Perfil gerenciável: publicação de conteúdo, escalações, notas técnicas e estatísticas</td>
+          <td>Presença oficial — engajamento direto com os fãs</td>
+        </tr>
+        <tr>
+          <td>Fã / Espectador<div class="fluxro-tag">Público</div></td>
+          <td>Ingresso com Face ID, mapa, resultados ao vivo, perfis de pilotos e equipes, pré-venda exclusiva</td>
+          <td>Experiência premium — app à catraca em menos de 2 segundos</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTIMENTO -->
+<section id="investimento">
+  <div class="inner">
+    <div class="reveal"><span class="eyebrow">Investimento do Projeto</span></div>
+    <div class="reveal delay-1"><h2 class="h2">Infraestrutura tecnológica <span class="h2-grad">completa.</span></h2></div>
+    <div class="inv-grid">
+      <div class="inv-card reveal delay-1">
+        <div class="inv-card-head">
+          <div class="inv-card-lbl">Infraestrutura Digital</div>
+          <div class="inv-card-val">R$ 700.000</div>
+          <div class="inv-card-desc">Sistema central Smart Race</div>
+        </div>
+        <div class="inv-card-body">
+          <ul>
+            <li>App Oficial Porsche Cup — iOS e Android</li>
+            <li>Sistema Face ID e controle por setor</li>
+            <li>Site oficial com bilheteria integrada</li>
+            <li>Publicação Apple Store e Google Play</li>
+            <li>Implementação, treinamento e suporte</li>
+          </ul>
+        </div>
+      </div>
+      <div class="inv-card reveal delay-2">
+        <div class="inv-card-head">
+          <div class="inv-card-lbl">Infraestrutura Física</div>
+          <div class="inv-card-val">R$ 13.400</div>
+          <div class="inv-card-desc">Equipamentos conectados ao sistema</div>
+        </div>
+        <div class="inv-card-body">
+          <ul>
+            <li>4 catracas com Face ID — todos os setores</li>
+            <li>2 tablets para gerência e diretoria</li>
+            <li>3 celulares para equipe de staff</li>
+            <li>Configurados e testados pela TicketTop</li>
+          </ul>
+        </div>
+      </div>
+      <div class="inv-card reveal delay-3">
+        <div class="inv-card-head-dark">
+          <div class="inv-card-lbl">Infraestrutura em Nuvem</div>
+          <div class="inv-card-val" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">R$ 200–1.000</div>
+          <div class="inv-card-desc">Por mês · cobrado no cartão Porsche Cup</div>
+        </div>
+        <div class="inv-card-body">
+          <ul>
+            <li>Baixa escala: ~R$ 200/mês entre etapas</li>
+            <li>Alta escala: até R$ 1.000/mês no dia da corrida</li>
+            <li>Escala automática conforme volume</li>
+            <li>Sem intermediação TicketTop</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="inv-total reveal">
+      <div class="inv-total-lbl">Investimento Total · Software · App · Implementação · Hardware</div>
+      <div class="inv-total-val">R$ 713.400</div>
+      <div class="inv-total-sub">Mensalidade do Centro de Operações a partir de R$ 15.000/mês conforme plano escolhido.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section id="planos">
+  <div class="inner">
+    <div class="reveal"><span class="eyebrow">Centro de Operações</span></div>
+    <div class="reveal delay-1"><h2 class="h2">Manutenção e evolução <span class="h2-grad">da infraestrutura.</span></h2></div>
+    <div class="planos-grid">
+      <div class="plano reveal delay-1">
+        <div class="plano-head">
+          <div class="plano-name">Base</div>
+          <div class="plano-price">R$ 15.000</div>
+          <div class="plano-period">por mês</div>
+        </div>
+        <div class="plano-body">
+          <ul>
+            <li>Monitoramento remoto da plataforma</li>
+            <li>Atualizações e manutenção do sistema</li>
+            <li>1 visita presencial (implantação + treinamento)</li>
+            <li>1 reunião operacional mensal</li>
+            <li>Suporte antes, durante e após cada etapa</li>
+            <li>Capacitação anual da equipe</li>
+          </ul>
+        </div>
+      </div>
+      <div class="plano featured reveal delay-2">
+        <div class="plano-head">
+          <div class="plano-name">Operação</div>
+          <div class="plano-price">R$ 20.000</div>
+          <div class="plano-period">por mês</div>
+        </div>
+        <div class="plano-body">
+          <ul>
+            <li>Monitoramento contínuo</li>
+            <li>2 reuniões operacionais mensais</li>
+            <li>1 visita presencial semestral</li>
+            <li>Capacitação trimestral</li>
+            <li>Suporte intensivo em cada etapa</li>
+            <li>Atualizações prioritárias</li>
+          </ul>
+        </div>
+      </div>
+      <div class="plano reveal delay-3">
+        <div class="plano-head">
+          <div class="plano-name">Centro de Comando</div>
+          <div class="plano-price">R$ 37.000</div>
+          <div class="plano-period">por mês</div>
+        </div>
+        <div class="plano-body">
+          <ul>
+            <li>Monitoramento intensivo</li>
+            <li>3 reuniões operacionais mensais</li>
+            <li>1 visita técnica trimestral</li>
+            <li>Capacitação bimestral</li>
+            <li>Planejamento operacional completo</li>
+            <li>Revisão estratégica anual</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CRONOGRAMA -->
+<section id="cronograma" style="background:linear-gradient(160deg,#0a0a0a,#0a0a10);overflow:hidden">
+  <div class="inner" style="padding-bottom:80px">
+    <div class="reveal"><span class="eyebrow">Cronograma de implementação</span></div>
+    <div class="reveal delay-1"><h2 class="h2">Do contrato ao campeonato <span class="h2-grad">operando.</span></h2></div>
+
+    <!-- TRACK CONTAINER -->
+    <div class="track-wrap reveal delay-2">
+      <!-- SVG racing track -->
+      <svg class="track-svg" viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="trackGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#FC2481"/>
+            <stop offset="100%" stop-color="#FE7B2B"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="url(#trackGrad)"/>
+          </marker>
+        </defs>
+        <!-- Track outer border (white dashed) -->
+        <path class="track-outer" d="M 60,60 Q 60,30 90,30 L 910,30 Q 940,30 940,60 L 940,140 Q 940,170 910,170 L 90,170 Q 60,170 60,140 Z"
+          fill="none" stroke="rgba(255,255,255,.08)" stroke-width="28"/>
+        <!-- Track gray base -->
+        <path class="track-base" d="M 60,100 Q 60,40 120,40 L 880,40 Q 940,40 940,100 L 940,100 Q 940,160 880,160 L 120,160 Q 60,160 60,100 Z"
+          fill="none" stroke="rgba(255,255,255,.06)" stroke-width="22"/>
+        <!-- Center white dashes -->
+        <path class="track-dash" d="M 80,100 Q 80,55 120,55 L 880,55 Q 920,55 920,100 L 920,100 Q 920,145 880,145 L 120,145 Q 80,145 80,100 Z"
+          fill="none" stroke="rgba(255,255,255,.1)" stroke-width="2" stroke-dasharray="18 12"/>
+        <!-- Animated gradient track line -->
+        <path id="race-line" d="M 80,100 Q 80,55 120,55 L 880,55 Q 920,55 920,100 L 920,100 Q 920,145 880,145 L 120,145 Q 80,145 80,100 Z"
+          fill="none" stroke="url(#trackGrad)" stroke-width="3.5" stroke-dasharray="2400" stroke-dashoffset="2400" filter="url(#glow)" opacity=".9"/>
+        <!-- Start flag -->
+        <rect x="52" y="84" width="16" height="32" fill="rgba(255,255,255,.15)" rx="2"/>
+        <rect x="52" y="84" width="8" height="8" fill="white" opacity=".6"/>
+        <rect x="60" y="92" width="8" height="8" fill="white" opacity=".6"/>
+        <rect x="52" y="100" width="8" height="8" fill="white" opacity=".6"/>
+        <!-- Finish flag (right) -->
+        <rect x="932" y="84" width="16" height="32" fill="rgba(252,36,129,.4)" rx="2"/>
+        <rect x="932" y="84" width="8" height="8" fill="var(--pink)" opacity=".8"/>
+        <rect x="940" y="92" width="8" height="8" fill="var(--pink)" opacity=".8"/>
+        <rect x="932" y="100" width="8" height="8" fill="var(--pink)" opacity=".8"/>
+        <!-- Checkpoints on track (4 points) -->
+        <!-- Point 1: ~x=200 top -->
+        <circle class="track-checkpoint" cx="250" cy="55" r="8" fill="#0a0a10" stroke="url(#trackGrad)" stroke-width="3" opacity="0"/>
+        <circle class="track-checkpoint-inner" cx="250" cy="55" r="3.5" fill="url(#trackGrad)" opacity="0"/>
+        <!-- Point 2: ~x=500 top -->
+        <circle class="track-checkpoint" cx="500" cy="55" r="8" fill="#0a0a10" stroke="url(#trackGrad)" stroke-width="3" opacity="0"/>
+        <circle class="track-checkpoint-inner" cx="500" cy="55" r="3.5" fill="url(#trackGrad)" opacity="0"/>
+        <!-- Point 3: ~x=750 top -->
+        <circle class="track-checkpoint" cx="750" cy="55" r="8" fill="#0a0a10" stroke="url(#trackGrad)" stroke-width="3" opacity="0"/>
+        <circle class="track-checkpoint-inner" cx="750" cy="55" r="3.5" fill="url(#trackGrad)" opacity="0"/>
+        <!-- Point 4: ~x=920 right curve -->
+        <circle class="track-checkpoint" cx="920" cy="100" r="8" fill="#0a0a10" stroke="url(#trackGrad)" stroke-width="3" opacity="0"/>
+        <circle class="track-checkpoint-inner" cx="920" cy="100" r="3.5" fill="url(#trackGrad)" opacity="0"/>
+        <!-- Car SVG icon -->
+        <g id="race-car" transform="translate(80,46)" opacity="0">
+          <rect x="-14" y="-7" width="28" height="14" rx="4" fill="url(#trackGrad)"/>
+          <rect x="-8" y="-10" width="16" height="8" rx="2" fill="rgba(255,255,255,.3)"/>
+          <circle cx="-10" cy="7" r="3.5" fill="#111"/>
+          <circle cx="10" cy="7" r="3.5" fill="#111"/>
+          <circle cx="-10" cy="7" r="2" fill="rgba(255,255,255,.5)"/>
+          <circle cx="10" cy="7" r="2" fill="rgba(255,255,255,.5)"/>
+        </g>
+      </svg>
+
+      <!-- Step labels positioned below track -->
+      <div class="track-labels">
+        <div class="track-label" data-step="0">
+          <div class="tl-connector"></div>
+          <div class="tl-badge">Início</div>
+          <div class="tl-title">Planejamento</div>
+          <ul class="tl-items">
+            <li>Projeto Final</li>
+            <li>Setores · Acessos</li>
+            <li>Identidade visual</li>
+          </ul>
+        </div>
+        <div class="track-label" data-step="1">
+          <div class="tl-connector"></div>
+          <div class="tl-badge">15 dias</div>
+          <div class="tl-title">Desenvolvimento</div>
+          <ul class="tl-items">
+            <li>Site oficial</li>
+            <li>Painel admin</li>
+          </ul>
+        </div>
+        <div class="track-label" data-step="2">
+          <div class="tl-connector"></div>
+          <div class="tl-badge">30 dias</div>
+          <div class="tl-title">Instalação e Testes</div>
+          <ul class="tl-items">
+            <li>Catracas Face ID</li>
+            <li>Testes · Setores</li>
+          </ul>
+        </div>
+        <div class="track-label active" data-step="3">
+          <div class="tl-connector"></div>
+          <div class="tl-badge tl-badge-final">45 dias 🏁</div>
+          <div class="tl-title">MVP Operacional</div>
+          <ul class="tl-items">
+            <li>Facial ativo</li>
+            <li>Bilheteria online</li>
+            <li>App publicado</li>
+            <li>Resultados ao vivo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERCEPÇÃO DE MARCA -->
+<section id="marca" style="background:#F6F8FA">
+  <div class="inner">
+    <div class="reveal"><span class="eyebrow">Percepção de marca</span></div>
+    <div class="reveal delay-1"><h2 class="h2" style="color:#12202B">Controle operacional <span class="h2-grad">comunica posicionamento.</span></h2></div>
+    <div class="grid-3" style="margin-top:2.5rem">
+      <div class="marca-card reveal delay-1">
+        <div class="marca-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <h3 class="h3" style="color:#12202B;margin-bottom:.5rem">O público percebe</h3>
+        <p style="color:#4a5a6a;font-size:.88rem;line-height:1.65">Quando acessos fluem e setores funcionam, a experiência fala por si. Nenhum marketing substitui.</p>
+      </div>
+      <div class="marca-card reveal delay-2">
+        <div class="marca-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2M12 12v4M10 14h4"/></svg>
+        </div>
+        <h3 class="h3" style="color:#12202B;margin-bottom:.5rem">O patrocinador percebe</h3>
+        <p style="color:#4a5a6a;font-size:.88rem;line-height:1.65">Setor controlado é setor com valor. O patrocinador enxerga ROI quando vê exclusividade de verdade.</p>
+      </div>
+      <div class="marca-card reveal delay-3">
+        <div class="marca-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3 class="h3" style="color:#12202B;margin-bottom:.5rem">O mercado percebe</h3>
+        <p style="color:#4a5a6a;font-size:.88rem;line-height:1.65">Uma operação premium posiciona o campeonato como referência — não apenas como evento de corrida.</p>
+      </div>
+    </div>
+    <div class="inv-total reveal" style="margin-top:2.5rem;padding:2rem 2.5rem">
+      <p style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-style:italic;font-size:1.4rem;text-transform:uppercase;color:#fff;letter-spacing:.04em">Bilheteria e acesso deixam de ser bastidor.<br>Passam a reforçar o valor da marca Porsche Cup.</p>
+      <p style="font-size:.8rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.65);margin-top:1rem">Segurança &nbsp;·&nbsp; Tecnologia &nbsp;·&nbsp; Performance &nbsp;·&nbsp; Marca</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-inner">
+    <div class="cta-logo reveal"><img src="01. Logo - TicketTop - Magenta.png" alt="TicketTop"></div>
+    <h1 class="cta-h1 reveal delay-1">Na Porsche Cup,<br><span style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">performance<br>é controle.</span></h1>
+    <p style="font-family:'Barlow Condensed',sans-serif;font-weight:600;font-style:italic;font-size:.95rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:1.5rem" class="reveal delay-2">acerto fino &nbsp;·&nbsp; estratégia &nbsp;·&nbsp; telemetria</p>
+    <p class="cta-sub reveal delay-3">No evento, é o mesmo princípio. Bilheteria e acessos sob controle absoluto. Isso não é apenas operação. É percepção de marca, padrão premium e confiança para público e patrocinadores.</p>
+    <p style="font-size:.88rem;color:rgba(255,255,255,.32);margin-bottom:2.5rem;font-style:italic;letter-spacing:.03em" class="reveal delay-3">A Porsche Cup não corre no escuro. Faz sentido o evento continuar correndo?</p>
+    <div class="cta-actions reveal delay-4">
+      <a href="https://wa.me/5511973530263" target="_blank" class="btn">Próximo passo: onboarding técnico</a>
+    </div>
+    <div class="cta-contact reveal delay-5">
+      <a href="https://wa.me/5511973530263">WhatsApp: (11) 97353-0263</a>
+      <a href="mailto:contato@tickettop.com.br">contato@tickettop.com.br</a>
+    </div>
+  </div>
+</section>
+
+<div class="grad-bar"></div>
+<footer>
+  <img src="01. Logo - TicketTop - Magenta.png" alt="TicketTop">
+  <div class="footer-copy">TicketTop × Porsche Cup Brasil &nbsp;·&nbsp; Smart Race &nbsp;·&nbsp; 2025</div>
+</footer>
+
+<script>
+// NAV scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+
+// ── Count-up animation ──────────────────────────────────
+function parseNum(raw) {
+  const m = raw.match(/^([^0-9\-]*)([0-9.,]+)([^0-9]*)$/);
+  if (!m) return null;
+  const prefix = m[1], numStr = m[2], suffix = m[3];
+  const clean = numStr.replace(/\./g, '').replace(',', '.');
+  const value = parseFloat(clean);
+  const isFloat = numStr.includes(',');
+  const hasThousands = numStr.includes('.');
+  return { prefix, numStr, suffix, value, isFloat, hasThousands };
+}
+function formatNum(n, info) {
+  if (info.isFloat) {
+    return n.toFixed(1).replace('.', ',');
+  }
+  if (info.hasThousands) {
+    return Math.round(n).toLocaleString('pt-BR');
+  }
+  return Math.round(n).toString();
+}
+function animateCount(el) {
+  const raw = el.dataset.count || el.textContent.trim();
+  const info = parseNum(raw);
+  if (!info || isNaN(info.value)) return;
+  el.dataset.count = el.dataset.count || raw;
+  const duration = 1600;
+  const start = performance.now();
+  function step(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 3);
+    const cur = ease * info.value;
+    el.textContent = info.prefix + formatNum(cur, info) + info.suffix;
+    if (t < 1) requestAnimationFrame(step);
+    else el.textContent = info.prefix + info.numStr + info.suffix;
+  }
+  requestAnimationFrame(step);
+}
+
+// ── Collect all number elements ──────────────────────────
+// Stats values, inv-total-val, plano-price, stat-val, fid-g-val
+const numberSelectors = '.sv, .stat-val, .inv-total-val, .plano-price, .fid-g-val, .hs-val';
+
+// ── Track animation trigger ───────────────────────────────
+const trackWrap = document.querySelector('.track-wrap');
+
+// ── Scroll reveal with count + track ────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('up');
+      // Trigger count-up for number elements inside revealed block
+      e.target.querySelectorAll(numberSelectors).forEach(el => {
+        if (!el.dataset.counted) {
+          el.dataset.counted = '1';
+          animateCount(el);
+        }
+      });
+      // If element itself is a number
+      if (e.target.matches(numberSelectors) && !e.target.dataset.counted) {
+        e.target.dataset.counted = '1';
+        animateCount(e.target);
+      }
+    }
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal,.reveal-scale').forEach(el => observer.observe(el));
+
+// Also observe number elements directly (stat-val, inv-total-val etc.)
+const numObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.counted) {
+      e.target.dataset.counted = '1';
+      animateCount(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll(numberSelectors).forEach(el => numObserver.observe(el));
+
+// Track timeline observer
+if (trackWrap) {
+  const trackObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('track-active');
+        trackObs.unobserve(e.target);
+        // Animate checkpoints
+        const cps = e.target.querySelectorAll('.track-checkpoint, .track-checkpoint-inner');
+        cps.forEach((cp, i) => {
+          setTimeout(() => { cp.style.opacity = '1'; }, 500 + i * 250);
+        });
+        // Animate car
+        const car = document.getElementById('race-car');
+        if (car) setTimeout(() => { car.style.opacity = '1'; }, 300);
+        // Activate step labels sequentially
+        const labels = e.target.querySelectorAll('.track-label');
+        labels.forEach((lbl, i) => {
+          setTimeout(() => lbl.classList.add('active'), 400 + i * 450);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+  trackObs.observe(trackWrap);
+}
+
+// Click step labels to highlight
+document.querySelectorAll('.track-label').forEach((lbl, i) => {
+  lbl.addEventListener('click', () => {
+    document.querySelectorAll('.track-label').forEach(l => l.classList.remove('active'));
+    lbl.classList.add('active');
+  });
+});
+
+// Smooth scroll for anchors
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// Mobile nav active state
+const mobBtns = document.querySelectorAll('.mob-nav-btn');
+const sections = ['hero','problema','solucao','smartrace','investimento','cta'];
+function updateMobNav(){
+  const scrollY = window.scrollY + window.innerHeight/2;
+  let active = 0;
+  sections.forEach((id, i) => {
+    const el = document.getElementById(id);
+    if(el && el.offsetTop <= scrollY) active = i;
+  });
+  mobBtns.forEach((btn,i) => btn.classList.toggle('active', i === active));
+}
+window.addEventListener('scroll', updateMobNav, {passive:true});
+updateMobNav();
+
+// ── HERO SLOW ZOOM after reveal ──────
+const heroBannerImg = document.querySelector('.hero-banner img');
+if(heroBannerImg){
+  heroBannerImg.addEventListener('animationend', () => {
+    heroBannerImg.style.animation = 'heroZoomSlow 25s linear infinite alternate';
+    heroBannerImg.style.opacity = '.7';
+    heroBannerImg.style.filter = 'blur(0px)';
+  });
+}
+
+// ── CURSOR GLOW ──────────────────────
+const glow = document.createElement('div');
+glow.classList.add('cursor-glow');
+document.body.appendChild(glow);
+let glowX = 0, glowY = 0, curX = 0, curY = 0;
+document.addEventListener('mousemove', e => {
+  curX = e.clientX; curY = e.clientY;
+  glow.classList.add('active');
+});
+document.addEventListener('mouseleave', () => glow.classList.remove('active'));
+(function animGlow(){
+  glowX += (curX - glowX) * .12;
+  glowY += (curY - glowY) * .12;
+  glow.style.left = glowX + 'px';
+  glow.style.top = glowY + 'px';
+  requestAnimationFrame(animGlow);
+})();
+</script>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mob-nav" role="navigation" aria-label="Navegação mobile">
+  <div class="mob-nav-inner">
+
+    <!-- Início — lucide: house -->
+    <a href="#hero" class="mob-nav-btn active" aria-label="Início">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/>
+        <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+      </svg>
+      <span>Início</span>
+    </a>
+
+    <!-- Desafio — lucide: flag -->
+    <a href="#problema" class="mob-nav-btn" aria-label="Desafio">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+        <line x1="4" x2="4" y1="22" y2="15"/>
+      </svg>
+      <span>Desafio</span>
+    </a>
+
+    <!-- Smart Race — lucide: brain -->
+    <a href="#smartrace" class="mob-nav-btn" aria-label="Smart Race">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/>
+        <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/>
+        <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/>
+        <path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/>
+        <path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/>
+        <path d="M3.477 10.896a4 4 0 0 1 .585-.396"/>
+        <path d="M19.938 10.5a4 4 0 0 1 .585.396"/>
+        <path d="M6 18a4 4 0 0 1-1.967-.516"/>
+        <path d="M19.967 17.484A4 4 0 0 1 18 18"/>
+      </svg>
+      <span>Smart Race</span>
+    </a>
+
+    <!-- Investimento — lucide: trending-up -->
+    <a href="#investimento" class="mob-nav-btn" aria-label="Investimento">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+        <polyline points="16 7 22 7 22 13"/>
+      </svg>
+      <span>Investimento</span>
+    </a>
+
+    <!-- Contato — lucide: message-circle (CTA) -->
+    <a href="#cta" class="mob-nav-btn mob-nav-cta" aria-label="Contato">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+      </svg>
+      <span>Contato</span>
+    </a>
+
+  </div>
+</nav>
+</body>
+</html>
